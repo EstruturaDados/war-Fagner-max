@@ -96,3 +96,86 @@ int main() {
 
 // limparBufferEntrada():
 // Função utilitária para limpar o buffer de entrada do teclado (stdin), evitando problemas com leituras consecutivas de scanf e getchar.
+
+#include <stdio.h>  // Para funções de entrada/saída (printf, scanf)
+#include <string.h> // Para manipulação de strings (embora não estritamente necessário para este caso, é uma boa prática incluir)
+
+// --- Definição da Struct Territorio ---
+/*
+ * Define a estrutura de dados composta chamada 'Territorio'.
+ * Esta struct agrupa informações relacionadas a um único território.
+ * * Campos:
+ * - nome: Armazena o nome do território (máx. 29 caracteres + '\0').
+ * - cor: Armazena a cor do exército que ocupa o território (máx. 9 caracteres + '\0').
+ * - tropas: Armazena a quantidade de tropas no território.
+ */
+struct Territorio {
+    char nome[30];
+    char cor[10];
+    int tropas;
+};
+
+// --- Função Principal ---
+int main() {
+    // Declaração de um vetor de structs Territorio.
+    // O vetor 'territorios' armazena 5 estruturas, conforme o requisito.
+    // O tamanho 5 é uma constante simbólica implícita para o número de cadastros.
+    struct Territorio territorios[5];
+    const int MAX_TERRITORIOS = 5;
+    int i; // Variável de controle para os laços 'for'
+
+    printf("==========================================\n");
+    printf("     Sistema de Cadastro de Territórios     \n");
+    printf("==========================================\n");
+    printf("Você irá cadastrar informações para 5 territórios.\n\n");
+
+    // --- Lógica de Entrada de Dados (Cadastro) ---
+    /*
+     * Laço for para percorrer o vetor 'territorios' e preencher cada uma das 5 posições.
+     * A usabilidade é garantida por mensagens claras que orientam o usuário.
+     */
+    for (i = 0; i < MAX_TERRITORIOS; i++) {
+        printf("--- Cadastro do Território #%d ---\n", i + 1);
+
+        // Entrada do NOME do Território
+        printf("Digite o NOME do território (máx. 29 caracteres): ");
+        // Usamos scanf com [^\n] para ler a linha inteira (incluindo espaços) até o ENTER.
+        // O limite de tamanho garante que não haja estouro de buffer (30-1).
+        scanf(" %29[^\n]", territorios[i].nome);
+
+        // Entrada da COR do Exército
+        printf("Digite a COR do exército (máx. 9 caracteres, e.g., Azul, Vermelho): ");
+        // Usamos %s, que lê uma palavra (até um espaço).
+        // %9s garante que não haverá estouro de buffer.
+        scanf("%9s", territorios[i].cor);
+
+        // Entrada da QUANTIDADE de Tropas
+        printf("Digite a QUANTIDADE de tropas: ");
+        scanf("%d", &territorios[i].tropas);
+        
+        printf("\n"); // Espaço em branco para melhor visualização entre os cadastros
+    }
+
+    // --- Lógica de Saída de Dados (Exibição) ---
+    /*
+     * Laço for para percorrer o vetor 'territorios' após o cadastro
+     * e exibir os dados de cada struct com formatação clara.
+     * Isto atende ao requisito de desempenho (exibição logo após o cadastro).
+     */
+    printf("==========================================\n");
+    printf("       Informações dos Territórios Registrados       \n");
+    printf("==========================================\n");
+
+    for (i = 0; i < MAX_TERRITORIOS; i++) {
+        printf("Território #%d\n", i + 1);
+        // Exibição clara e formatada dos campos da struct
+        printf("  Nome: %s\n", territorios[i].nome);
+        printf("  Cor do Exército: %s\n", territorios[i].cor);
+        printf("  Tropas: %d\n", territorios[i].tropas);
+        printf("------------------------------------------\n");
+    }
+
+    printf("Fim do Cadastro e Exibição. Obrigado!\n");
+
+    return 0; // Indica que o programa terminou com sucesso
+}
